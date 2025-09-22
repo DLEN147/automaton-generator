@@ -12,6 +12,7 @@ Este proyecto permite **crear, editar, visualizar y exportar autómatas**, propo
 - Basado en **Python 3**.
 ---
 ## Estructura del proyecto
+```bash
 automaton-generator/
 │── main.py # Punto de entrada principal
 │
@@ -29,6 +30,7 @@ automaton-generator/
 ├── gui_dialogs.py # Diálogos interactivos
 ├── gui_drawing.py # Dibujo de autómatas en la interfaz
 └── gui_events.py # Manejo de eventos
+```
 ---
 ## Instalación
 1. Clonar este repositorio:
