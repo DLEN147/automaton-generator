@@ -39,7 +39,7 @@ automaton-generator/
 git clone https://github.com/DLEN147/automaton-generator.git
 cd automaton-generator/automaton-generator
 ```
-##Crear un entorno virtual (opcional pero recomendado):
+## Crear un entorno virtual (opcional pero recomendado):
 ```bash
 python -m venv .venv
 source .venv/bin/activate   # En Linux/Mac
@@ -57,7 +57,7 @@ python main.py
 6. Guardar o cargar autómatas desde archivo.
 7. Probar cadenas para verificar si son aceptadas o rechazadas.
 
-##Reglas de funcionamiento
+## Reglas de funcionamiento
 - Debe existir un único estado inicial.
 - Puede haber uno o varios estados de aceptación.
 - Cada transición se define con un símbolo válido del alfabeto.
@@ -65,9 +65,9 @@ python main.py
 - Una cadena se acepta si, al procesarla desde el estado inicial, el autómata termina en un estado de aceptación.
 - Se pueden guardar los autómatas para reutilizarlos en sesiones posteriores.
 
-##Licencia
+## Licencia
 Este proyecto se distribuye bajo la licencia MIT.
 
-##Créditos
+## Créditos
 Proyecto desarrollado con fines educativos por DLEN147 y JLCDS.
 Inspirado en la enseñanza de autómatas, lenguajes formales y teoría de la computación.
