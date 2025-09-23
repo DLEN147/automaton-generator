@@ -4,7 +4,7 @@
 
 ### Desarrollado por:
 - **David Leonardo Espíndola Núñez** - Cod. 202128390
-- **Juan Lopez Castro** - Cod. 
+- **Juan David Lopez Castro** - Cod. 202023451 
 
 #### Universidad Pedagógica y Tecnológica de Colombia
 ###### Facultad de Ingeniería  
