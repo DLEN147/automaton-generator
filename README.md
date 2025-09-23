@@ -7,10 +7,8 @@
 - **Juan Lopez Castro** - Cod. 
 
 #### Universidad Pedagógica y Tecnológica de Colombia
-**Facultad de Ingeniería**  
-**Ingeniería en Sistemas y Computación**
-**Lenguajes Formales**
-
+###### Facultad de Ingeniería  
+###### Ingeniería en Sistemas y Computación
 ---
 
 ## Iniciando el Simulador
