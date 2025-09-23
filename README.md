@@ -14,7 +14,7 @@
 ## Iniciando el Simulador
 
 ### Ejecución del programa
-1. Ejecuta el archivo `main.py` o abre el ejecutable
+1. Ejecuta el archivo `main.py` o abre el ejecutable (ejecutable válido para Windows por ahora)
 2. Interfaz principal con canvas de dibujo
 3. Botones de funciones en la parte superior
 4. Barra de instrucciones contextual en la parte inferior
