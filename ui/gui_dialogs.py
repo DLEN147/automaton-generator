@@ -2,15 +2,13 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog, filedialog, ttk
 from data.serializer import guardar_afd, cargar_afd
 
-
+#Maneja todas las ventanas de diálogo y funcionalidades avanzadas
 class DialogManager:
-    """Maneja todas las ventanas de diálogo y funcionalidades avanzadas"""
-    
     def __init__(self, gui):
         self.gui = gui
 
+    #Verifica que el AFD esté completo para evaluación
     def _verificar_afd_completo(self):
-        """Verifica que el AFD esté completo para evaluación"""
         if not self.gui.estados_graficos:
             messagebox.showwarning("Advertencia", "Debe crear al menos un estado")
             return False
@@ -28,9 +26,8 @@ class DialogManager:
             return False
         
         return True
-
+#Evalúa una cadena con el AFD actual
     def evaluar_cadena(self):
-        """Evalúa una cadena con el AFD actual"""
         if not self._verificar_afd_completo():
             return
             
@@ -60,8 +57,8 @@ class DialogManager:
         except Exception as e:
             messagebox.showerror("Error", f"Error al evaluar cadena: {str(e)}")
 
+    #Permite evaluar múltiples cadenas de forma interactiva
     def evaluador_multiple(self):
-        """Permite evaluar múltiples cadenas de forma interactiva"""
         if not self._verificar_afd_completo():
             return
 
@@ -170,9 +167,8 @@ class DialogManager:
         # Centrar ventana
         ventana_evaluador.transient(self.gui.root)
         ventana_evaluador.grab_set()
-
+ #Genera las primeras 10 cadenas del lenguaje
     def generar_cadenas_lenguaje(self):
-        """Genera las primeras 10 cadenas del lenguaje"""
         if not self._verificar_afd_completo():
             return
 
@@ -262,8 +258,8 @@ class DialogManager:
         except Exception as e:
             messagebox.showerror("Error", f"Error al generar cadenas: {str(e)}")
 
-    def mostrar_quintupla(self):
-        """Muestra la quintupla formal del AFD"""
+#Muestra la quintupla formal del AFD
+    def mostrar_quintupla(self):  
         if not self.gui.estados_graficos:
             messagebox.showwarning("Advertencia", "Debe crear al menos un estado")
             return
@@ -309,8 +305,8 @@ class DialogManager:
         ventana_quintupla.transient(self.gui.root)
         ventana_quintupla.grab_set()
 
+    #Guarda el AFD en un archivo
     def guardar(self):
-        """Guarda el AFD en un archivo"""
         if not self.gui.estados_graficos:
             messagebox.showwarning("Advertencia", "No hay estados para guardar")
             return
@@ -326,8 +322,8 @@ class DialogManager:
             except Exception as e:
                 messagebox.showerror("Error", f"Error al guardar: {str(e)}")
 
+    #Carga un AFD desde un archivo
     def cargar(self):
-        """Carga un AFD desde un archivo"""
         filename = filedialog.askopenfilename(
             filetypes=[("JSON files", "*.json"), ("All files", "*.*")]
         )
@@ -349,7 +345,9 @@ class DialogManager:
             except Exception as e:
                 messagebox.showerror("Error", f"Error al cargar: {str(e)}")
 
-    # ================== MÉTODOS AUXILIARES ==================
+    #MÉTODOS AUXILIARES
+    
+    #Muestra una ventana estilizada con un resultado
     def _mostrar_ventana_resultado(self, titulo, mensaje):
         """Muestra una ventana estilizada con un resultado"""
         ventana_resultado = tk.Toplevel(self.gui.root)
@@ -378,15 +376,15 @@ class DialogManager:
         ventana_resultado.transient(self.gui.root)
         ventana_resultado.grab_set()
 
+    #Limpia el historial del evaluador múltiple
     def _limpiar_historial(self, text_widget):
-        """Limpia el historial del evaluador múltiple"""
         text_widget.config(state="normal")
         text_widget.delete("1.0", tk.END)
         text_widget.insert("1.0", "💡 Ingrese cadenas para evaluar. Presione Enter o click en Evaluar.\n")
         text_widget.config(state="disabled")
 
+    #Regenera las cadenas en la ventana actual
     def _regenerar_cadenas(self, text_widget):
-        """Regenera las cadenas en la ventana actual"""
         try:
             cadenas_validas = self.gui.afd.generar_cadenas_validas(10)
             
@@ -413,7 +411,6 @@ class DialogManager:
             messagebox.showerror("Error", f"Error al regenerar cadenas: {str(e)}")
 
     def _construir_quintupla(self):
-        """Construye el texto de la quintupla del AFD"""
         contenido = "Un Autómata Finito Determinista (AFD) se define formalmente como:\n\n"
         contenido += "AFD = (Q, Σ, δ, q₀, F)\n\n"
         contenido += "Donde:\n\n"
@@ -501,5 +498,6 @@ class DialogManager:
             contenido += "📍 AFD trivial (un solo estado)\n"
         if self.gui.afd.estado_inicial in self.gui.afd.estados_aceptacion:
             contenido += "📍 Acepta la cadena vacía (ε)\n"
+
 
         return contenido
