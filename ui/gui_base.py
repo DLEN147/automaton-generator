@@ -7,7 +7,6 @@ from .gui_dialogs import DialogManager
 
 
 class AFDGuiBase:
-    """Clase base de la GUI que maneja la configuración inicial y coordinación"""
     
     def __init__(self, root):
         self.root = root
@@ -15,19 +14,19 @@ class AFDGuiBase:
         self.root.geometry("1200x800")
         self.root.configure(bg="#2c3e50")
         
-        # Configurar estilo moderno
+        #Configurar estilo moderno
         self.setup_styles()
-        
-        # Modelo de datos
+
+        #Inicializar modelo
         self.afd = AFD()
 
-        # Estados gráficos y variables de control
+        # Estados gráficos
         self.estado_counter = 0
-        self.estados_graficos = {}   # nombre → (x, y, circle_id, text_id, shadow_id)
+        self.estados_graficos = {}   #nombre
         self.estado_inicial = None
         self.transiciones_graficas = []
 
-        # Variables para drag & drop y modos
+        #Drag & Drop
         self.dragging = False
         self.drag_estado = None
         self.drag_offset = (0, 0)
@@ -37,18 +36,17 @@ class AFDGuiBase:
         self.hover_estado = None
         self.modo_borrador = False
 
-        # Inicializar managers
+        #Instanciar componentes
         self.drawing_manager = DrawingManager(self)
         self.event_handler = EventHandler(self)
         self.dialog_manager = DialogManager(self)
 
-        # Crear interfaz
         self.create_interface()
         self.setup_events()
         self.setup_keyboard_shortcuts()
 
     def setup_styles(self):
-        """Configuración de colores y estilos"""
+        #estilos
         self.colors = {
             'bg_primary': '#2c3e50',
             'bg_secondary': '#34495e',
@@ -67,11 +65,11 @@ class AFDGuiBase:
         }
 
     def create_interface(self):
-        """Crear la interfaz principal"""
+        #main
         main_frame = tk.Frame(self.root, bg=self.colors['bg_primary'])
         main_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        # Frame superior para botones
+        #nav
         button_frame = tk.Frame(main_frame, bg=self.colors['bg_primary'])
         button_frame.pack(fill="x", pady=(0, 10))
 
@@ -80,7 +78,7 @@ class AFDGuiBase:
         self.create_canvas(main_frame)
 
     def create_buttons(self, parent):
-        """Crear botones de la interfaz"""
+        #botones
         buttons_config = [
             ("💾 Guardar", self.dialog_manager.guardar, self.colors['boton_success']),
             ("📂 Cargar", self.dialog_manager.cargar, self.colors['boton_primary']),
@@ -98,12 +96,10 @@ class AFDGuiBase:
                            font=('Segoe UI', 10, 'bold'), bd=0, padx=15, pady=5)
             btn.pack(side="left", padx=5)
             
-            # Guardar referencia al botón borrador
             if "Borrador" in text:
                 self.boton_borrador = btn
 
     def create_info_section(self, parent):
-        """Crear sección de información/instrucciones"""
         info_frame = tk.Frame(parent, bg=self.colors['bg_secondary'], relief="ridge", bd=1)
         info_frame.pack(fill="x", pady=(0, 10))
         
@@ -114,14 +110,12 @@ class AFDGuiBase:
         self.info_label.pack(pady=10)
 
     def create_canvas(self, parent):
-        """Crear el canvas principal"""
         canvas_frame = tk.Frame(parent, bg=self.colors['bg_secondary'], relief="sunken", bd=2)
         canvas_frame.pack(fill="both", expand=True)
         self.canvas = tk.Canvas(canvas_frame, bg=self.colors['canvas_bg'], highlightthickness=0)
         self.canvas.pack(fill="both", expand=True, padx=5, pady=5)
 
     def setup_events(self):
-        """Configurar eventos del canvas"""
         self.canvas.bind("<Button-1>", self.event_handler.on_click)
         self.canvas.bind("<B1-Motion>", self.event_handler.on_drag_motion)
         self.canvas.bind("<ButtonRelease-1>", self.event_handler.on_drag_stop)
@@ -129,14 +123,12 @@ class AFDGuiBase:
         self.canvas.bind("<Motion>", self.event_handler.on_hover)
 
     def setup_keyboard_shortcuts(self):
-        """Configurar atajos de teclado"""
         self.root.bind("<Control-s>", lambda e: self.dialog_manager.guardar())
         self.root.bind("<Control-o>", lambda e: self.dialog_manager.cargar())
         self.root.bind("<F5>", lambda e: self.dialog_manager.evaluar_cadena())
         self.root.bind("<Delete>", self.event_handler.eliminar_seleccionado)
 
     def toggle_borrador(self):
-        """Activa/desactiva el modo borrador"""
         self.modo_borrador = not self.modo_borrador
         
         if self.modo_borrador:
@@ -149,7 +141,6 @@ class AFDGuiBase:
             self.canvas.configure(cursor="")
 
     def limpiar_canvas(self):
-        """Limpia completamente el canvas"""
         self.canvas.delete("all")
         self.estados_graficos = {}
         self.transiciones_graficas = []
@@ -164,14 +155,12 @@ class AFDGuiBase:
         self.afd = AFD()
 
     def get_estado_por_coordenada(self, x, y):
-        """Obtiene el estado en las coordenadas dadas"""
         for nombre, (ex, ey, _, _, _) in self.estados_graficos.items():
             if (x-ex)**2 + (y-ey)**2 <= 30**2:
                 return nombre
         return None
 
     def get_transicion_por_coordenada(self, x, y):
-        """Obtiene la transición en las coordenadas dadas"""
         for trans_info in self.transiciones_graficas:
             if trans_info['tipo'] == 'auto':
                 # Para auto-transiciones, verificar área del bucle
@@ -201,4 +190,5 @@ class AFDGuiBase:
                                     return trans_info
                         except:
                             continue
+
         return None
