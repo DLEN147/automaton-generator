@@ -3,8 +3,8 @@ from tkinter import messagebox, simpledialog
 import math
 
 
+#Maneja todos los eventos de la interfaz"""
 class EventHandler:
-    """Maneja todos los eventos de la interfaz"""
     
     def __init__(self, gui):
         self.gui = gui
@@ -60,8 +60,8 @@ class EventHandler:
                 self.gui.afd.agregar_estado(nombre)
                 self.drawing.dibujar_estado_mejorado(nombre, event.x, event.y)
 
+    #Arrastrar un estado
     def on_drag_motion(self, event):
-        """Arrastrar un estado"""
         if self.gui.dragging and self.gui.drag_estado and not self.gui.modo_borrador:
             # Calcular distancia para determinar si es drag real
             if not self.gui.drag_started:
@@ -77,14 +77,14 @@ class EventHandler:
             x, y = event.x - self.gui.drag_offset[0], event.y - self.gui.drag_offset[1]
             self.drawing.mover_estado(self.gui.drag_estado, x, y)
 
+    #Soltar estado arrastrado
     def on_drag_stop(self, event):
-        """Soltar estado arrastrado"""
         self.gui.dragging = False
         self.gui.drag_estado = None
         self.gui.drag_started = False
 
+    #Menú contextual
     def on_right_click(self, event):
-        """Menú contextual"""
         estado = self.gui.get_estado_por_coordenada(event.x, event.y)
         if estado:
             menu = tk.Menu(self.gui.root, tearoff=0)
@@ -113,8 +113,8 @@ class EventHandler:
                            command=lambda: self.eliminar_estado(estado))
             menu.tk_popup(event.x_root, event.y_root)
 
+    #Efecto hover sobre estados
     def on_hover(self, event):
-        """Efecto hover sobre estados"""
         if self.gui.modo_borrador:
             # Cambiar cursor en modo borrador
             estado = self.gui.get_estado_por_coordenada(event.x, event.y)
@@ -143,9 +143,10 @@ class EventHandler:
             
             self.gui.hover_estado = estado
 
-    # ================== FUNCIONES DE ESTADO ==================
+    #FUNCIONES DE ESTADO
+
+    #Marca un estado como inicial
     def set_inicial(self, estado):
-        """Marca un estado como inicial"""
         try:
             # Guardar estado antes de cambiar
             self.gui.save_state_for_undo()
@@ -183,8 +184,8 @@ class EventHandler:
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
+    #Quita la marca de estado inicial
     def quitar_inicial(self, estado):
-        """Quita la marca de estado inicial"""
         if estado == self.gui.afd.estado_inicial:
             self.gui.save_state_for_undo()  # Guardar antes de cambiar
             self.gui.afd.estado_inicial = None
@@ -198,8 +199,8 @@ class EventHandler:
         else:
             messagebox.showinfo("Info", f"El estado '{estado}' no era inicial")
 
+    #Alterna el estado de aceptación
     def toggle_aceptacion(self, estado):
-        """Alterna el estado de aceptación"""
         try:
             self.gui.save_state_for_undo()  # Guardar antes de cambiar
             if estado in self.gui.afd.estados_aceptacion:
@@ -212,8 +213,8 @@ class EventHandler:
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
+    #Crea una transición del estado a sí mismo
     def crear_autotransicion(self, estado):
-        """Crea una transición del estado a sí mismo"""
         simbolo = self.pedir_simbolo_transicion(estado, estado)
         if simbolo:
             try:
@@ -224,8 +225,8 @@ class EventHandler:
             except Exception as e:
                 messagebox.showerror("Error", f"Error al crear auto-transición: {str(e)}")
 
+    #Elimina un estado y sus transiciones
     def eliminar_estado(self, estado):
-        """Elimina un estado y sus transiciones"""
         if messagebox.askyesno("Confirmar", f"¿Eliminar el estado '{estado}'?"):
             # Eliminar elementos gráficos del estado
             if estado in self.gui.estados_graficos:
@@ -259,8 +260,8 @@ class EventHandler:
             # Redibujar canvas
             self.drawing.redibujar_todo()
 
+    #Elimina una transición específica
     def eliminar_transicion(self, trans_info):
-        """Elimina una transición específica"""
         if messagebox.askyesno("Confirmar", 
                              f"¿Eliminar transición {trans_info['origen']} -{trans_info['simbolo']}→ {trans_info['destino']}?"):
             # Eliminar elementos gráficos
@@ -278,19 +279,20 @@ class EventHandler:
                        t.symbol == trans_info['simbolo'])
             ]
 
+    #Elimina el estado seleccionado
     def eliminar_seleccionado(self, event=None):
-        """Elimina el estado seleccionado (tecla Delete)"""
         if self.gui.estado_seleccionado:
             self.gui.save_state_for_undo()  # Guardar antes de eliminar
             self.eliminar_estado(self.gui.estado_seleccionado)
             self.gui.estado_seleccionado = None
 
+    #Pide al usuario el símbolo para una transición
     def pedir_simbolo_transicion(self, origen, destino):
-        """Pide al usuario el símbolo para una transición"""
         if origen == destino:
             prompt = f"Símbolo para auto-transición en {origen}:"
         else:
             prompt = f"Símbolo para transición {origen} → {destino}:"
         
         simbolo = simpledialog.askstring("Transición", prompt)
+
         return simbolo.strip() if simbolo else None
