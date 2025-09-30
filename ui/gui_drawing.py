@@ -3,22 +3,21 @@ import math
 
 
 class DrawingManager:
-    """Maneja todo lo relacionado con el dibujo en el canvas"""
     
     def __init__(self, gui):
         self.gui = gui
 
     def dibujar_estado_mejorado(self, nombre, x, y):
-        """Dibuja un estado en el canvas"""
+        #Dibujar estado
         r = 30
         # Sombra
         shadow = self.gui.canvas.create_oval(x-r+3, y-r+3, x+r+3, y+r+3, 
                                             fill="#bdc3c7", outline="")
-        # Círculo principal
+        #Círculo principal
         circle = self.gui.canvas.create_oval(x-r, y-r, x+r, y+r, 
                                             outline="#2c3e50", width=3,
                                             fill=self.gui.colors['estado_normal'])
-        # Texto
+        #Texto
         text = self.gui.canvas.create_text(x, y, text=nombre, 
                                           font=("Segoe UI", 11, "bold"), 
                                           fill="white")
@@ -26,13 +25,12 @@ class DrawingManager:
         self.gui.estados_graficos[nombre] = (x, y, circle, text, shadow)
 
     def redibujar_estado_mejorado(self, nombre, aceptar=None, inicial=None):
-        """Redibuja un estado con nuevos atributos"""
         if nombre not in self.gui.estados_graficos:
             return
             
         x, y, old_circle, text_id, shadow = self.gui.estados_graficos[nombre]
         
-        # Determinar color basado en los parámetros explícitos o el estado actual del AFD
+        #Colores
         if inicial is True or (inicial is None and nombre == self.gui.afd.estado_inicial):
             color = self.gui.colors['estado_inicial']
         elif aceptar is True or (aceptar is None and nombre in self.gui.afd.estados_aceptacion):
@@ -42,28 +40,26 @@ class DrawingManager:
         else:
             color = self.gui.colors['estado_normal']
         
-        # Eliminar círculo anterior
+        # Eliminar
         self.gui.canvas.delete(old_circle)
         
-        # Crear nuevo círculo
+        #Crear nuevo círculo
         r = 30
         circle = self.gui.canvas.create_oval(x-r, y-r, x+r, y+r, 
                                             outline="#2c3e50", width=3, 
                                             fill=color)
         
-        # Si es estado de aceptación, agregar círculo interior
+        #Estado inicial y final
         es_aceptacion = (aceptar is True or 
                         (aceptar is None and nombre in self.gui.afd.estados_aceptacion))
         if es_aceptacion:
             inner_circle = self.gui.canvas.create_oval(x-r+5, y-r+5, x+r-5, y+r-5, 
                                                       outline="white", width=2, fill="")
         
-        # Actualizar referencia del círculo y asegurar que el texto esté visible
         self.gui.estados_graficos[nombre] = (x, y, circle, text_id, shadow)
         self.gui.canvas.tag_raise(text_id)
 
     def dibujar_transicion_mejorada(self, origen, destino, simbolo):
-        """Dibuja una transición entre estados"""
         if origen not in self.gui.estados_graficos or destino not in self.gui.estados_graficos:
             return
             
@@ -76,19 +72,17 @@ class DrawingManager:
             self._dibujar_transicion_normal(x1, y1, x2, y2, simbolo, origen, destino)
 
     def _dibujar_autotransicion(self, x, y, simbolo, origen, destino):
-        """Dibuja una auto-transición (bucle)"""
         loop_radius = 25
         loop_x = x
         loop_y = y - 30 - loop_radius
         
-        # Arco del bucle
         arc = self.gui.canvas.create_arc(loop_x - loop_radius, loop_y - loop_radius,
                                         loop_x + loop_radius, loop_y + loop_radius,
                                         start=30, extent=300, 
                                         outline=self.gui.colors['transicion'],
                                         width=2, style="arc")
         
-        # Flecha al final del bucle
+        #Flechas
         arrow_x = loop_x + loop_radius * 0.7
         arrow_y = loop_y - loop_radius * 0.3
         arrow = self.gui.canvas.create_polygon(arrow_x, arrow_y,
@@ -97,7 +91,6 @@ class DrawingManager:
                                               fill=self.gui.colors['transicion'],
                                               outline=self.gui.colors['transicion'])
         
-        # Etiqueta
         text_bg = self.gui.canvas.create_rectangle(loop_x - 15, loop_y - 15,
                                                   loop_x + 15, loop_y + 5,
                                                   fill="white", outline="")
@@ -116,7 +109,6 @@ class DrawingManager:
         self.gui.transiciones_graficas.append(trans_info)
 
     def _dibujar_transicion_normal(self, x1, y1, x2, y2, simbolo, origen, destino):
-        """Dibuja una transición normal entre dos estados diferentes"""
         # Calcular puntos en el borde de los círculos
         dx = x2 - x1
         dy = y2 - y1
@@ -160,7 +152,6 @@ class DrawingManager:
         self.gui.transiciones_graficas.append(trans_info)
 
     def mover_estado(self, nombre, x, y):
-        """Actualizar posición de un estado arrastrado"""
         if nombre not in self.gui.estados_graficos:
             return
             
@@ -172,7 +163,6 @@ class DrawingManager:
         self.gui.canvas.move(text, dx, dy)
         self.gui.canvas.move(shadow, dx, dy)
         
-        # Actualizar posición guardada MANTENIENDO las referencias originales
         self.gui.estados_graficos[nombre] = (x, y, circle, text, shadow)
         
         # Asegurar que el texto esté visible
@@ -182,8 +172,6 @@ class DrawingManager:
         self.redibujar_transiciones_de_estado(nombre)
 
     def redibujar_transiciones_de_estado(self, estado):
-        """Redibuja todas las transiciones que involucran un estado"""
-        # Eliminar y redibujar transiciones gráficas del estado
         transiciones_a_redibujar = []
         nuevas_transiciones = []
         
@@ -205,19 +193,16 @@ class DrawingManager:
                                            trans_info['simbolo'])
 
     def highlight_estado(self, nombre, color):
-        """Resalta un estado con el color dado"""
         if nombre in self.gui.estados_graficos:
             circle = self.gui.estados_graficos[nombre][2]
             self.gui.canvas.itemconfig(circle, outline=color, width=4)
 
     def unhighlight_estado(self, nombre):
-        """Quita el resaltado de un estado"""
         if nombre in self.gui.estados_graficos:
             circle = self.gui.estados_graficos[nombre][2]
             self.gui.canvas.itemconfig(circle, outline="#2c3e50", width=3)
 
     def redibujar_todo(self):
-        """Redibuja todo el canvas"""
         self.gui.canvas.delete("all")
         self.gui.transiciones_graficas = []
         
@@ -228,7 +213,6 @@ class DrawingManager:
         for nombre, (x, y, _, _, _) in temp_estados.items():
             self.dibujar_estado_mejorado(nombre, x, y)
             
-            # Aplicar propiedades especiales manteniendo las prioridades correctas
             if nombre == self.gui.afd.estado_inicial and nombre in self.gui.afd.estados_aceptacion:
                 # Estado que es TANTO inicial COMO de aceptación - prioridad al inicial
                 self.redibujar_estado_mejorado(nombre, aceptar=True, inicial=True)
@@ -239,14 +223,12 @@ class DrawingManager:
                 # Solo aceptación
                 self.redibujar_estado_mejorado(nombre, aceptar=True, inicial=False)
         
-        # Redibujar transiciones
         for transicion in self.gui.afd.transiciones:
             self.dibujar_transicion_mejorada(transicion.current_state, 
                                            transicion.next_state, 
                                            transicion.symbol)
 
     def generar_layout_automatico(self):
-        """Genera posiciones automáticas para los estados cargados"""
         estados = list(self.gui.afd.estados.keys())
         if not estados:
             return
@@ -281,4 +263,5 @@ class DrawingManager:
         for transicion in self.gui.afd.transiciones:
             self.dibujar_transicion_mejorada(transicion.current_state, 
                                            transicion.next_state, 
+
                                            transicion.symbol)
