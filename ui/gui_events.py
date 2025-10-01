@@ -10,8 +10,8 @@ class EventHandler:
         self.gui = gui
         self.drawing = gui.drawing_manager
 
+     #Click izquierdo: crear estado, seleccionar para transición o borrar
     def on_click(self, event):
-        """Click izquierdo: crear estado, seleccionar para transición o borrar"""
         estado = self.gui.get_estado_por_coordenada(event.x, event.y)
         transicion_grafica = self.gui.get_transicion_por_coordenada(event.x, event.y)
 
@@ -296,3 +296,4 @@ class EventHandler:
         simbolo = simpledialog.askstring("Transición", prompt)
 
         return simbolo.strip() if simbolo else None
+
