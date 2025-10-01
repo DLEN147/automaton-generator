@@ -3,7 +3,7 @@ from tkinter import messagebox, simpledialog
 import math
 
 
-#Maneja todos los eventos de la interfaz"""
+#Maneja todos los eventos de la interfaz
 class EventHandler:
     
     def __init__(self, gui):
@@ -296,4 +296,5 @@ class EventHandler:
         simbolo = simpledialog.askstring("Transición", prompt)
 
         return simbolo.strip() if simbolo else None
+
 
