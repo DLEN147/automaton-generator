@@ -4,7 +4,7 @@ from models.transition import Transition
 
 
 def guardar_afd(afd: AFD, nombre_archivo: str):
-    """Guarda el AFD en un archivo JSON"""
+    ##Guardar en JSON
     datos = {
         "estados": list(afd.estados.keys()),
         "alfabeto": list(afd.alfabeto),
@@ -26,7 +26,6 @@ def guardar_afd(afd: AFD, nombre_archivo: str):
 
 
 def cargar_afd(nombre_archivo: str) -> AFD:
-    """Carga un AFD desde un archivo JSON"""
     afd = AFD()
     try:
         with open(nombre_archivo, 'r', encoding='utf-8') as archivo:
@@ -67,3 +66,4 @@ def cargar_afd(nombre_archivo: str) -> AFD:
         print(f"Error al cargar el archivo: {str(e)}")
 
     return afd
+
