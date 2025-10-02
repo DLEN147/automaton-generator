@@ -1,190 +1,190 @@
-# Manual de Usuario - AFDGedit
+# User Manual - AFDGedit
 
-## Información del Proyecto
+## Project Information
 
-### Desarrollado por:
-- **David Leonardo Espíndola Núñez** - Cod. 202128390
-- **Juan David Lopez Castro** - Cod. 202023451 
+### Developed by:
+- **David Leonardo Espíndola Núñez** - Code. 202128390  
+- **Juan David Lopez Castro** - Code. 202023451  
 
-#### Universidad Pedagógica y Tecnológica de Colombia
-###### Facultad de Ingeniería  
-###### Ingeniería en Sistemas y Computación
+#### Universidad Pedagógica y Tecnológica de Colombia  
+###### Faculty of Engineering  
+###### Systems and Computer Engineering  
 ---
 
-## Iniciando el Simulador
+## Starting the Simulator
 
-### Ejecución del programa
-1. Ejecuta el archivo `main.py` o abre el ejecutable (ejecutable válido para Windows por ahora)
-2. Interfaz principal con canvas de dibujo
-3. Botones de funciones en la parte superior
-4. Barra de instrucciones contextual en la parte inferior
+### Running the Program
+1. Run the `main.py` file or open the executable (currently valid for Windows only)  
+2. Main interface with drawing canvas  
+3. Function buttons at the top  
+4. Contextual instruction bar at the bottom  
 
-## Construcción del AFD
+## Building the DFA
 
-### Creación de Estados
+### Creating States
 
-**Crear estado:**
-- Click en área vacía del canvas
-- Aparece círculo azul numerado automáticamente (q0, q1, q2...)
+**Create state:**
+- Click on an empty area of the canvas  
+- A blue circle appears, automatically numbered (q0, q1, q2...)  
 
-**Mover estados:**
-- Arrastra clickeando y manteniendo presionado
-- Las transiciones se actualizan automáticamente
+**Move states:**
+- Drag by clicking and holding  
+- Transitions update automatically  
 
-### Configuración de Estados
+### Configuring States
 
-**Estado inicial:**
-1. Click derecho en el estado deseado
-2. Seleccionar "Marcar como inicial"
-3. El estado se marca en rojo
-4. Solo puede existir uno por AFD
+**Initial state:**
+1. Right-click on the desired state  
+2. Select "Mark as initial"  
+3. The state is marked in red  
+4. Only one initial state is allowed per DFA  
 
-**Estados de aceptación:**
-1. Click derecho en cualquier estado
-2. Seleccionar "Marcar como aceptación"
-3. El estado se marca en verde con círculo doble
-4. Pueden existir múltiples estados de aceptación
+**Accepting states:**
+1. Right-click on any state  
+2. Select "Mark as accepting"  
+3. The state is marked in green with a double circle  
+4. Multiple accepting states are allowed  
 
-**Quitar propiedades:**
-- Click derecho → "Quitar como inicial" / "Quitar aceptación"
+**Remove properties:**
+- Right-click → "Unmark as initial" / "Unmark as accepting"  
 
-### Creación de Transiciones
+### Creating Transitions
 
-**Transición entre estados:**
-1. Click en estado origen (se resalta en naranja)
-2. Click en estado destino
-3. Ingresar símbolo de transición en la ventana emergente
-4. Aparece flecha etiquetada
+**Transition between states:**
+1. Click on the source state (highlighted in orange)  
+2. Click on the target state  
+3. Enter the transition symbol in the pop-up window  
+4. A labeled arrow appears  
 
-**Auto-transición:**
-1. Click derecho en estado
-2. "Transición a sí mismo"
-3. Ingresar símbolo para el bucle
-4. Aparece arco curvado sobre el estado
+**Self-transition:**
+1. Right-click on a state  
+2. Select "Self-transition"  
+3. Enter the symbol for the loop  
+4. A curved arc appears over the state  
 
-**Cancelar selección:**
-- Click en área vacía cancela la selección activa
+**Cancel selection:**
+- Clicking on an empty area cancels the active selection  
 
-## Herramientas de Edición
+## Editing Tools
 
-### Modo Borrador
-1. Click en botón "Borrador" (cambia a rojo)
-2. Click en estados o transiciones para eliminar
-3. Click nuevamente para desactivar
+### Eraser Mode
+1. Click the "Eraser" button (turns red)  
+2. Click on states or transitions to delete  
+3. Click again to deactivate  
 
-### Limpieza Completa
-- "Limpiar Todo" elimina el AFD completo
-- Reinicia el canvas para nuevo diseño
+### Full Reset
+- "Clear All" deletes the entire DFA  
+- Resets the canvas for a new design  
 
-## Evaluación y Análisis
+## Evaluation and Analysis
 
-### Evaluación de Cadenas
+### String Evaluation
 
-**Evaluador simple:**
-1. "Evaluar Cadena" → ingresar secuencia
-2. Resultado: ACEPTADA/RECHAZADA con recorrido
+**Simple evaluator:**
+1. "Evaluate String" → enter sequence  
+2. Result: ACCEPTED/REJECTED with traversal path  
 
-**Evaluador múltiple:**
-1. "Evaluador Múltiple" → ventana interactiva
-2. Probar múltiples cadenas con historial
-3. Enter o "Evaluar" para procesar cada cadena
+**Multiple evaluator:**
+1. "Multiple Evaluator" → interactive window  
+2. Test multiple strings with history  
+3. Press Enter or "Evaluate" to process each string  
 
-### Generación de Lenguaje
-- "Generar Cadenas" muestra las primeras 10 cadenas válidas
-- Útil para verificar funcionamiento del AFD
+### Language Generation
+- "Generate Strings" shows the first 10 valid strings  
+- Useful to verify DFA behavior  
 
-### Análisis Formal
-- "Ver Quintupla" muestra definición matemática completa
-- Incluye análisis de completitud y validación
+### Formal Analysis
+- "View Quintuple" displays the complete mathematical definition  
+- Includes completeness analysis and validation  
 
-## Persistencia
+## Persistence
 
-### Guardar
-1. "Guardar" → seleccionar ubicación y nombre
-2. Formato JSON legible
+### Save
+1. "Save" → choose location and name  
+2. Readable JSON format  
 
-### Cargar
-1. "Cargar" → seleccionar archivo JSON
-2. Redibuja automáticamente con layout circular
+### Load
+1. "Load" → select JSON file  
+2. Automatically redraws with circular layout  
 
-## Controles y Navegación
+## Controls and Navigation
 
-### Atajos de Teclado
-| Tecla | Función |
-|-------|---------|
-| `Ctrl+S` | Guardar AFD |
-| `Ctrl+O` | Cargar AFD |
-| `F5` | Evaluar cadena |
-| `Delete` | Eliminar elemento seleccionado |
+### Keyboard Shortcuts
+| Key | Function |
+|-----|----------|
+| `Ctrl+S` | Save DFA |
+| `Ctrl+O` | Load DFA |
+| `F5` | Evaluate string |
+| `Delete` | Delete selected element |
 
-### Indicadores Visuales
+### Visual Indicators
 
-**Estados:**
-- Azul: Estado normal
-- Rojo: Estado inicial
-- Verde: Estado de aceptación
-- Naranja: Estado seleccionado
-- Morado: Hover del cursor
+**States:**
+- Blue: Normal state  
+- Red: Initial state  
+- Green: Accepting state  
+- Orange: Selected state  
+- Purple: Cursor hover  
 
-**Transiciones:**
-- Flecha recta: Entre estados diferentes
-- Arco curvado: Auto-transición
-- Etiqueta blanca: Símbolo de transición
+**Transitions:**
+- Straight arrow: Between different states  
+- Curved arc: Self-transition  
+- White label: Transition symbol  
 
-### Menús Contextuales
-**Click derecho en estado:**
-- Marcar/quitar como inicial
-- Marcar/quitar como aceptación
-- Crear auto-transición
-- Eliminar estado
+### Context Menus
+**Right-click on a state:**
+- Mark/unmark as initial  
+- Mark/unmark as accepting  
+- Create self-transition  
+- Delete state  
 
-## Validaciones del Sistema
+## System Validations
 
-### Verificaciones Automáticas
-- Existencia de estado inicial antes de evaluar
-- Existencia de estados de aceptación
-- Validez de símbolos de transición
-- Conexiones válidas entre estados
+### Automatic Checks
+- Initial state must exist before evaluation  
+- At least one accepting state must exist  
+- Transition symbols must be valid  
+- Valid connections between states  
 
-### Mensajes de Error
-- "Debe definir un estado inicial"
-- "Debe definir al menos un estado de aceptación"
-- "El símbolo 'X' no pertenece al alfabeto"
-- "Error al crear transición"
+### Error Messages
+- "You must define an initial state"  
+- "You must define at least one accepting state"  
+- "The symbol 'X' does not belong to the alphabet"  
+- "Error creating transition"  
 
-## Limitaciones Técnicas
+## Technical Limitations
 
-- Visualización óptima: hasta 20 estados
-- Símbolos: caracteres individuales únicamente
-- Tipo: AFD exclusivamente (no AFN)
-- Plataforma: Python 3.7+ o ejecutable
+- Optimal visualization: up to 20 states  
+- Symbols: single characters only  
+- Type: DFA only (no NFA)  
+- Platform: Python 3.7+ or executable  
 
-## Resolución de Problemas
+## Troubleshooting
 
-### Problemas Técnicos
-**Programa no inicia:**
-- Verificar Python 3.7+
-- Comprobar tkinter: `python -m tkinter`
+### Technical Issues
+**Program won’t start:**
+- Check Python 3.7+  
+- Verify tkinter: `python -m tkinter`  
 
-**Elementos no se dibujan:**
-- Reiniciar programa
-- Usar "Limpiar Todo"
+**Elements not drawing:**
+- Restart the program  
+- Use "Clear All"  
 
-**Error al cargar archivo:**
-- Verificar formato JSON válido
-- Comprobar referencias de estados correctas
+**Error loading file:**
+- Verify valid JSON format  
+- Check correct state references  
 
-### Problemas de Uso
-**AFD no acepta cadenas esperadas:**
-- Verificar estados de aceptación definidos
-- Revisar completitud de transiciones
-- Usar "Ver Quintupla" para análisis
+### Usage Issues
+**DFA does not accept expected strings:**
+- Verify accepting states are defined  
+- Check transition completeness  
+- Use "View Quintuple" for analysis  
 
-**Transiciones no aparecen:**
-- Verificar que ambos estados existan
-- Comprobar que el símbolo no esté vacío
-- Intentar recrear la transición
+**Transitions not appearing:**
+- Verify both states exist  
+- Ensure the symbol is not empty  
+- Try recreating the transition  
 
 ---
 
-**AFDGedit**
+**AFDGedit**  
